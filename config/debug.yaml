@@ -1,0 +1,60 @@
+#
+#
+#
+#
+####################
+### scrape
+####################
+#
+##_meta.script_name: scrape
+#
+#force_update: True
+#
+##categories: all
+#skip_existing: True
+#
+##skip_confirm: True
+#
+#
+##################################
+### sanitize-news
+##################################
+#
+#_meta.script_name: sanitize-news
+#
+#categories: general
+#limit: 1
+#
+#
+#date: '20-08-07'
+#
+#
+########################
+### present-notion
+########################
+#
+_meta.script_name: present-notion
+
+parents: ['usual']
+
+#remove_existing: False
+
+#skip_existing: False
+
+#
+#parents: ['news_table']
+#
+##table_id: 766aa794-f3f3-4a6a-a696-c4212590311a
+#
+#
+####################
+### new table
+####################
+#
+##_meta.script_name: new-notion-table
+#
+##parents: ['new_table']
+#
+#
+#
+#

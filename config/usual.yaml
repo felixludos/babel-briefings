@@ -1,0 +1,12 @@
+
+
+link: https://www.notion.so/felixleeb/nnn-container-e5fd09b7a17b4dd19d631b521c093f81
+
+scrape_categories: all
+categories: [general] # for formatting/presenting
+
+sanitize_workers: 24 # Google translate server can handle the traffic :)
+num_workers: 4 # for presenting - don't overload Notion server
+
+
+
