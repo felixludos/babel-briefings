@@ -11,6 +11,7 @@ from itertools import product
 
 import omnifig as fig
 
+from newsapi.newsapi_exception import NewsAPIException
 from newsapi import NewsApiClient
 
 from .common import THIS_DIR, MissingTokenError, BadStatusError, save_response, NATION_CODES, CATEGORIES
@@ -30,21 +31,20 @@ class Multi_News_API_Client:
 	def get_top_headlines(self, **params):
 		response = None
 		if self.client is not None:
-			
-			try:
-				response = self.client.get_top_headlines(**params)
-			except Exception as e:
-				print(e)
-				retry = True
-			else:
-				retry = response['status'] != 'ok' and self.auto_retry
-				
-			if retry:
-				self.restart_client()
-				
-				if self.client is not None:
+			retry = True
+			while retry:
+				try:
 					response = self.client.get_top_headlines(**params)
-			
+					retry = False
+				except Exception as e:
+					print(e)
+					self.restart_client()
+					if self.client is None:
+						raise e
+					retry = True
+				else:
+					retry = response['status'] != 'ok' and self.auto_retry
+				
 		return response
 		
 		
@@ -106,11 +106,11 @@ def scrape_news(A):
 		if not silent:
 			print(f'Some news has already been scraped today {today}')
 	
-		if force_update:
-			print(f' ... Rescraping for now: {now}')
-		else:
-			print(' ... No update necessary (set with "--force_update")')
-			return 0
+		# if force_update:
+		# 	print(f' ... Rescraping for now: {now}')
+		# else:
+		# 	print(' ... No update necessary (set with "--force_update")')
+		# 	return 0
 	
 	news_dir = os.path.join(today_dir, now)
 	
@@ -167,7 +167,7 @@ def scrape_news(A):
 	
 	num = len(nations) * len(cats)
 	
-	jobs = [item for item in product(nations, cats) if item not in existing]
+	jobs = [item for item in product(cats, nations) if item not in existing]
 	
 	if len(jobs) < num:
 		print(f'Filtered out {num-len(jobs)} existing responses (for today), {len(jobs)} remaining jobs')
@@ -187,17 +187,23 @@ def scrape_news(A):
 	if pbar:
 		jobs = tqdm(jobs)
 	
-	for nation, cat in jobs:
+	for cat, nation in jobs:
 		
 		jobs.set_description(f'{NATION_CODES[nation]:<12} {cat:>14}')
 		
-		name = f'{nation}_{cat}.json'
+		name = f'{cat}_{nation}.json'
 		path = os.path.join(news_dir, name)
 		
 		# response = json.load(open('test_bg_business.json', 'r'))
 		# time.sleep(0.03)
+		try:
+			response = newsapi.get_top_headlines(category=cat, country=nation, page_size=100)
 
-		response = newsapi.get_top_headlines(category=cat, country=nation, page_size=100)
+		except NewsAPIException as e:
+			
+			print(f'Using News API key number {newsapi.idx+1}, starts with: {newsapi.keys[newsapi.idx][:4]}...')
+			
+			raise e
 
 		if response is None or ('status' in response and response['status'] != 'ok'):
 			if save_error_responses:

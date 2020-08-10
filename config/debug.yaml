@@ -6,7 +6,7 @@
 ### scrape
 ####################
 #
-##_meta.script_name: scrape
+_meta.script_name: scrape-news
 #
 #force_update: True
 #
@@ -33,7 +33,7 @@
 ### present-notion
 ########################
 #
-_meta.script_name: present-notion
+#_meta.script_name: present-notion
 
 parents: ['usual']
 

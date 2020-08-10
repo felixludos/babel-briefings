@@ -77,6 +77,8 @@ LANGUAGE_FIXES = {
 	'enms': 'en',
 	'enfy': 'en',
 	'gl': 'es',
+	'eneu': 'en',
+	
 }
 
 def get_flag(nation):
@@ -117,6 +119,8 @@ def get_language_code(lang, as_emoji=True):
 	
 	if lang in LANGUAGE_FIXES:
 		lang = LANGUAGE_FIXES[lang]
+	if len(lang) > 2:
+		lang = lang[:2]
 	
 	if lang not in LANGUAGE_NATIONS:
 		# print(f'WARNING: Encoutered an unknown language: {lang}')
@@ -461,7 +465,13 @@ def present_notion(A):
 	resume = A.pull('resume', False)
 	if resume:
 		print('Resuming operation (so no existing records will be removed)')
-
+	
+	row_tracker = load_response(row_tracker_path) \
+		if row_tracker_path is not None and os.path.isfile(row_tracker_path) else {}
+	
+	if len(row_tracker):
+		print(f'Already aware of {len(row_tracker)} row titles.')
+	
 	if resume:
 		remove_existing = False
 	else:
@@ -491,17 +501,14 @@ def present_notion(A):
 				with client.as_atomic_transaction():
 					for row in rows[bidx*stepsize:(bidx+1)*stepsize]:
 						row.remove()
-				
+			
+			row_tracker.clear()
+			
 			print()
-	
+			
 	clt.refresh()
 	
-	row_tracker = load_response(row_tracker_path) \
-		if row_tracker_path is not None and os.path.isfile(row_tracker_path) else {}
-	
-	if len(row_tracker):
-		print(f'Already aware of {len(row_tracker)} row titles.')
-	
+	existing = set()
 	if skip_existing:
 
 		rows = clt.get_rows()
@@ -516,13 +523,14 @@ def present_notion(A):
 			ID = row.id
 			if ID not in row_tracker:
 				row_tracker[ID] = row.title
+			existing.add(row_tracker[ID])
 		
 		if row_tracker_path is not None:
 			save_response(row_tracker, row_tracker_path)
 		
 		print()
 	
-	existing = set(row_tracker.values())
+	# existing = set(row_tracker.values())
 	
 	clt.refresh()
 	
