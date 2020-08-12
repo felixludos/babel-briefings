@@ -63,7 +63,7 @@ NATION_CODES = {
  'ua': 'Ukraine',
  'gb': 'United Kingdom',
  'us': 'United States',
- 've': 'Venezuela'
+ 've': 'Venezuela',
 }
 
 CATEGORIES = ['general', 'science', 'technology', 'business',
@@ -257,6 +257,7 @@ LANGUAGE_CODES = [('ab', 'Abkhaz'),
 LANGUAGE_CODES = dict(LANGUAGE_CODES)
 
 LANGUAGE_NATIONS = {
+ 'ha': 'Nigeria',
  'gl': 'Spain',
  'mk': 'Macedonia',
  'pt': 'Portugal',
@@ -289,14 +290,14 @@ LANGUAGE_NATIONS = {
  'ro': 'Romania',
  'sl': 'Slovenia',
  'hr': 'Croatia',
- 'bshr': 'Croatia',
  'fr': 'France',
  'it': 'Italy',
  'de': 'Germany',
  'ja': 'Japan',
  'bs': 'Bosnia',
  'no': 'Norway',
- 'hu': 'Hungary'
+ 'hu': 'Hungary',
+ 'gu': 'India',
 }
 
 # LANGUAGE_NATIONS = {

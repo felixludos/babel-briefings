@@ -78,7 +78,7 @@ LANGUAGE_FIXES = {
 	'enfy': 'en',
 	'gl': 'es',
 	'eneu': 'en',
-	
+	'lbde': 'de',
 }
 
 def get_flag(nation):

@@ -2,6 +2,7 @@
 extra/
 raw_news/
 clean_news/
+present_news/
 scratch.ipynb
 
 # Byte-compiled / optimized / DLL files

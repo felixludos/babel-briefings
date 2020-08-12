@@ -13,7 +13,9 @@ Aside from the requirements in the [`requirements.txt`](https://github.com/felix
 
 This project heavily relies on [omni-fig](https://github.com/felixludos/omni-fig) for organizing the scripts and config files.
 
-Assuming you have all the dependencies installed. You can run a full update (to scrape, translate, and present) all articles with the command (which uses the `usual` config found in `config/usual.yaml` - where the link must be replaced with your own Notion page):
+The recommended way to update (scrape, translate, and present) all articles, is to first replace the link in the config file `config/usual.yaml` with a link to one of your notion pages where the table of articles should be created (it is recommended for the page to be empty).
+
+After you only need to run:
 
 ```bash
 python main.py usual
@@ -25,6 +27,14 @@ Or equivalently,
 fig nnn usual
 ```
 
+Due to the high volume of requests sent to the Notion server, you may receive an error 504 while uploading the articles to the Notion page. If this occurs wait for 30 seconds to a minute, and then resume the upload with the following command:
+
+```bash
+python main.py usual --resume
+```
+
+If the error pops up more than 4-5 times, you can also try decreasing the number of workers used to upload the articles to the table (using `--num_workerss 2`, default is 4).
+
 Each of the three steps can be done separately using:
 
 ```bash
@@ -32,6 +42,8 @@ fig scrape-news usual
 fig sanitize-news usual
 fig present-notion usual
 ```
+
+(see [omni-fig](https://github.com/felixludos/omni-fig) and/or code for more information about the available arguments)
 
 # Performance
 
