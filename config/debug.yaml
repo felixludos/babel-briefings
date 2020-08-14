@@ -6,7 +6,7 @@
 ### scrape
 ####################
 #
-_meta.script_name: scrape-news
+#_meta.script_name: scrape-news
 #
 #force_update: True
 #
@@ -33,7 +33,10 @@ _meta.script_name: scrape-news
 ### present-notion
 ########################
 #
-#_meta.script_name: present-notion
+_meta.script_name: present-notion
+
+resume: True
+num_workers: 0
 
 parents: ['usual']
 

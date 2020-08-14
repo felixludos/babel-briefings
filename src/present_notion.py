@@ -278,8 +278,41 @@ class Notion_Formatter:
 		if article['description'] is not None:
 			info['description'] = article['description']
 		
-
 		row = self.clt.add_row(**info)
+		
+		# try:
+		# 	row = self.clt.add_row(**info)
+		# except HTTPError as e:
+		#
+		# 	if '413' in str(e): # payload too large - split into two transactions
+		# 		later = {}
+		# 		if 'description' in info:
+		# 			later['description'] = info['description']
+		# 			del info['description']
+		# 		# later['title'] = info['title']
+		# 		# del info['title']
+		# 		later['original_title'] = info['original_title']
+		# 		del info['original_title']
+		# 		if 'cover' in info:
+		# 			later['cover'] = info['cover']
+		# 			del info['cover']
+		# 		if 'link' in info:
+		# 			later['link'] = info['link']
+		# 			del info['link']
+		#
+		# 		row = self.clt.add_row(**info)
+		#
+		# 		# row.title = later['title']
+		# 		if 'description' in later:
+		# 			row.description = later['description']
+		# 		row.original_title = later['original_title']
+		# 		if 'cover' in later:
+		# 			row.cover = later['cover']
+		# 		if 'link' in later:
+		# 			row.link = later['link']
+		# 	else:
+		# 		raise e
+		
 		
 		# row.title = article['title']
 		#
