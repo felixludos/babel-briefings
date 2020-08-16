@@ -51,9 +51,9 @@ class Multi_News_API_Client:
 	def restart_client(self):
 		self.idx += 1
 		if self.idx == len(self.keys):
-			print('ERROR: Out of API keys, unable to continue making requests')
-			self.client = None
-			return
+			raise Exception('Out of API keys, unable to continue making requests')
+			# self.client = None
+			# return
 		elif not self.silent:
 			print(f'Using key {self.idx+1}/{len(self.keys)}')
 		self.client = NewsApiClient(api_key=self.keys[self.idx])
