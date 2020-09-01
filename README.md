@@ -1,7 +1,7 @@
 # No Nonsense News
 *Scraping and Presenting World News Headlines*
 
-## See the final product: [No Nonsense News Headlines](https://www.notion.so/felixleeb/a3f6eb244397478a9c9ac1d8c7b1babb?v=8948c08d08d44b39be52ec513618016a)
+## See the final product: [No Nonsense News Headlines](nnn.felixludos.com)
 
 ## For more information about the project visit the [project page](https://www.notion.so/felixleeb/No-Nonsense-News-0ecebf66967147dda6a96b549c7a73d1)
 
