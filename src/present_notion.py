@@ -517,11 +517,13 @@ def present_notion(A):
 		
 		rows = clt.get_rows()
 		
-		if not skip_confirm and len(rows):
+		if not skip_confirm:
 			inp = input(f'Will remove existing {len(rows)} rows from table, confirm (y/[n])? ')
 			if inp.lower() != 'y':
 				print('Quitting without doing anything.')
 				return 1
+			
+		if len(rows):
 			
 			batches = (len(rows) + stepsize - 1) // stepsize
 			bidxs = range(batches)
