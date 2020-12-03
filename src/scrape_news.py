@@ -189,7 +189,8 @@ def scrape_news(A):
 	
 	for cat, nation in jobs:
 		
-		jobs.set_description(f'{NATION_CODES[nation]:<12} {cat:>14}')
+		if pbar:
+			jobs.set_description(f'{NATION_CODES[nation]:<12} {cat:>14}')
 		
 		name = f'{cat}_{nation}.json'
 		path = os.path.join(news_dir, name)

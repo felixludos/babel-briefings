@@ -14,12 +14,26 @@ import omnifig as fig
 from humpack.farming import Farmer
 
 from notion.client import NotionClient
-from googletrans import Translator
+try:
+	from googletrans import Translator
+except ImportError:
+	print('WARNING: googletrans is not installed')
+try:
+	import goslate
+except ImportError:
+	print('WARNING: goslate is not installed')
+try:
+	import translators as ts
+except ImportError:
+	print('WARNING: translators is not installed')
+
+from langdetect import detect
+
 
 from .common import THIS_DIR, NATION_CODES, CATEGORIES, \
 	MissingTokenError, BadStatusError, MissingLinkError, load_response, save_response
 
-LANGUAGE_KEYS = ['title', 'description', 'content']
+LANGUAGE_KEYS = ['title', 'description',]# 'content']
 
 
 def resolve_source(source, author):
@@ -50,12 +64,21 @@ def article_iterator(responses):
 		# yield cat # signal for next cat -> save results
 
 
-def _init(**kwargs):
-	trans = Translator()
+def _init(translation_type='goog',**kwargs):
+	
+	if translation_type == 'goog':
+		trans = Translator()
+	elif translation_type == 'goslate':
+		trans = goslate.Goslate()
+	else:
+		trans = ts
+	
+	
+	#
 	return {'trans': trans}
 	
 
-def _run(raw, raw_titles, trans, language, **kwargs):
+def _run(raw, raw_titles, trans, language, translation_type='goog',  **kwargs):
 	cat = raw['category']
 	
 	article = raw.copy()
@@ -70,13 +93,29 @@ def _run(raw, raw_titles, trans, language, **kwargs):
 	
 	article['source'], article['author'] = resolve_source(raw['source'], raw['author'])
 	
-	article['language'] = trans.detect(article['title']).lang
+	# article['language'] = trans.detect(article['title']).lang
+	article['language'] = detect(article['title'])
 	article['original_title'] = article['title']
 	if language is not None and article['language'] != language:
 		for key in LANGUAGE_KEYS:
-			if article[key] is not None:
-				out = trans.translate(article[key], dest=language)
-				article[key] = out.text
+			if article[key] is not None and len(article[key]):
+				if translation_type == 'goog':
+					out = trans.translate(article[key], dest=language).text
+				
+				elif translation_type == 'goslate':
+					out = trans.translate(article[key], language)
+				
+				elif translation_type.startswith('google'):
+					out = ts.google(article[key], if_use_cn_host='cn' in translation_type)
+				elif translation_type.startswith('bing'):
+					out = ts.bing(article[key], if_use_cn_host='cn' in translation_type)
+				elif translation_type.startswith('sogou'):
+					out = ts.sogou(article[key])
+				
+				else:
+					raise Exception(f'unknown translator type: {translation_type}')
+				
+				article[key] = out
 	
 	# articles.append(article)
 	#
@@ -127,10 +166,11 @@ def format_news(A):
 		pbar = False
 	
 	
-	# trans = Translator()
 	language = A.pull('language', 'en')
 	if language is not None:
 		print(f'Will translate all articles into {language}')
+	
+	translation_type = A.pull('translator', 'google')
 	
 	cats = A.pull('categories', 'general')
 	
@@ -157,10 +197,15 @@ def format_news(A):
 
 		print(f'Found previous collection of sanitized articles, using them to skip {len(existing_titles)} existing')
 	
-	limit = A.pull('limit', None)  # num articles per response
-	if limit is not None:
-		print(f'Only sanitizing the first {limit} articles for each response')
+	cat_limit = A.pull('cat-limit', None)  # num articles per response
+	# if cat_limit is not None:
+	# 	print(f'Only sanitizing the first {cat_limit} articles for each response')
 	
+	article_limit = A.pull('article-limit', '<>limit', None)
+	
+	if article_limit is not None:
+		print(f'Only sanitizing the first {article_limit} articles')
+
 	responses = {}
 	nums = {}
 	
@@ -181,8 +226,8 @@ def format_news(A):
 		if skip_existing:
 			response['articles'] = [a for a in response['articles'] if a['title'] not in existing_titles]
 		
-		if limit is not None:
-			response['articles'] = response['articles'][:limit]
+		if cat_limit is not None:
+			response['articles'] = response['articles'][:cat_limit]
 		
 		if cat not in responses:
 			nums[cat] = 0
@@ -228,26 +273,41 @@ def format_news(A):
 
 	arg_gen = _raw_args()
 	farmer = Farmer(_run, volatile_gen=arg_gen, init_fn=_init,
-	                private_args={'raw_titles': raw_titles, 'language': language},
+	                private_args={'raw_titles': raw_titles, 'language': language, 'translation_type':translation_type},
+	                timeout=A.pull('timeout', 20),
 	                num_workers=num_workers)
 	
 	
 	jobs = iter(farmer)
 	
-	for is_fixed, article in jobs:
-		fixed += is_fixed
-		art_num += 1
-		
-		if article['original_title'] not in existing_titles:
-			full.append(article)
-			articles.append(article)
-		
-		# if False:
-		# 	save_response(articles, os.path.join(dest_dir, f'{dest_name}_{raw}.json'))
-		
-		existing_titles.add(article['original_title'])
+	count = 0
 	
-	print(f'Formatted all {art_num} articles')
+	try:
+		for is_fixed, article in jobs:
+			fixed += is_fixed
+			art_num += 1
+			
+			if article['original_title'] not in existing_titles:
+				full.append(article)
+				articles.append(article)
+			
+			# if False:
+			# 	save_response(articles, os.path.join(dest_dir, f'{dest_name}_{raw}.json'))
+			
+			existing_titles.add(article['original_title'])
+			
+			count += 1
+			if article_limit is not None and count == article_limit:
+				break
+	except:
+		print('Error encountered - saving progress so far')
+		save_response(full, out_path)
+		raise
+	
+	
+	print(f'Formatted {art_num} articles')
+	if total == art_num:
+		print('All articles formatted')
 	
 	save_response(full, out_path)
 	

@@ -26,23 +26,28 @@
 #limit: 1
 #
 #
+
 #date: '20-08-07'
+#sanitize_workers: 24
+timeout: None
 #
 #
 ########################
 ### present-notion
 ########################
-#
-_meta.script_name: present-notion
 
-resume: True
-num_workers: 0
+_meta.script_name: present-notion
+#
+#resume: True
+#num_workers: 0
 
 parents: ['usual']
 
 #remove_existing: False
 
 #skip_existing: False
+
+resume: True
 
 #
 #parents: ['news_table']
