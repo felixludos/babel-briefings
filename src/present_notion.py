@@ -278,7 +278,7 @@ class Notion_Formatter:
 		if article['description'] is not None:
 			info['description'] = article['description']
 		
-		row = self.clt.add_row(**info)
+		row = self.clt.add_row(update_views=False, **info)
 		
 		# try:
 		# 	row = self.clt.add_row(**info)

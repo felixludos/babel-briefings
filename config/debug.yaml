@@ -20,23 +20,25 @@
 ### sanitize-news
 ##################################
 #
-#_meta.script_name: sanitize-news
+_meta.script_name: sanitize-news
 #
 #categories: general
 #limit: 1
 #
 #
 #date: '20-08-07'
+sanitize_workers: 24
+timeout: None
 #
 #
 ########################
 ### present-notion
 ########################
-#
-_meta.script_name: present-notion
 
-resume: True
-num_workers: 0
+#_meta.script_name: present-notion
+#
+#resume: True
+#num_workers: 0
 
 parents: ['usual']
 

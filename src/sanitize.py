@@ -229,6 +229,7 @@ def format_news(A):
 	arg_gen = _raw_args()
 	farmer = Farmer(_run, volatile_gen=arg_gen, init_fn=_init,
 	                private_args={'raw_titles': raw_titles, 'language': language},
+	                timeout=A.pull('timeout', 20),
 	                num_workers=num_workers)
 	
 	
