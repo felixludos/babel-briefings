@@ -115,7 +115,16 @@ def get_nation_names(with_emoji=True):
 	
 	return nations
 
-def get_language_code(lang, as_emoji=True):
+from iso639 import languages
+
+def get_language_code(lang, as_emoji=True, procs=False):
+	
+	if lang is None:
+		return 'Unknown'
+	
+	if not procs and len(lang) == 3:
+		lang = languages.part2b[lang].part1 if lang in languages.part2b else lang
+		return get_language_code(lang, as_emoji=as_emoji, procs=True)
 	
 	if lang in LANGUAGE_FIXES:
 		lang = LANGUAGE_FIXES[lang]
@@ -250,7 +259,7 @@ class Notion_Formatter:
 		if article['author'] is not None:
 			info['author'] = article['author']
 		
-		if article['source'] is not None:
+		if article['source'] is not None and isinstance(article['source'], str):
 			info['source'] = article['source']
 		
 		language = get_language_code(article['language'], as_emoji=self.language_emoji)
@@ -266,7 +275,8 @@ class Notion_Formatter:
 		info['link'] = article['url']
 		
 		info['published'] = self.parse_date(article['publishedAt'])
-		info['collected'] = self.parse_timestamp(article['timestamp'])
+		if 'timestamp' in article:
+			info['collected'] = self.parse_timestamp(article['timestamp'])
 		
 		info['nation'] = get_nation(article['nation'], with_emoji=self.with_emoji)
 		

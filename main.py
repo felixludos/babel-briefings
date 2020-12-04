@@ -17,7 +17,8 @@ def update_nnn(A):
 		print('--- Scraping complete ---')
 		
 		print('--- Sanitizing news articles ---')
-		fig.run('sanitize-news', A)
+		# fig.run('sanitize-news', A)
+		fig.run('nlp-news', A)
 		print('--- Sanitizing complete ---')
 	
 	present_script = A.pull('present_script', 'present-notion', silent=True)

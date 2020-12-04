@@ -336,12 +336,12 @@ LANGUAGE_NATIONS = {
 # }
 
 def save_response(obj, path):
-	with open(path, 'w') as f:
+	with open(str(path), 'w') as f:
 		json.dump(obj, f)
 
 
 def load_response(path):
-	with open(path, 'r') as f:
+	with open(str(path), 'r') as f:
 		return json.load(f)
 
 
