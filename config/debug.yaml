@@ -26,8 +26,13 @@ _meta.script_name: sanitize-news
 #limit: 1
 #
 #
+
 #date: '20-08-07'
+<<<<<<< HEAD
 sanitize_workers: 24
+=======
+#sanitize_workers: 24
+>>>>>>> c8a12f75cc5af40e9c65af4b82729e2261dba956
 timeout: None
 #
 #
@@ -35,7 +40,11 @@ timeout: None
 ### present-notion
 ########################
 
+<<<<<<< HEAD
 #_meta.script_name: present-notion
+=======
+_meta.script_name: present-notion
+>>>>>>> c8a12f75cc5af40e9c65af4b82729e2261dba956
 #
 #resume: True
 #num_workers: 0
@@ -45,6 +54,8 @@ parents: ['usual']
 #remove_existing: False
 
 #skip_existing: False
+
+resume: True
 
 #
 #parents: ['news_table']

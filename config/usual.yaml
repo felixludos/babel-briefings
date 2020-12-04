@@ -2,10 +2,17 @@
 
 link: https://www.notion.so/felixleeb/nnn-container-e5fd09b7a17b4dd19d631b521c093f81
 
+table_id: a3f6eb244397478a9c9ac1d8c7b1babb
+
 scrape_categories: all
 categories: [general] # for formatting/presenting
 
-sanitize_workers: 24 # Google translate server can handle the traffic :)
+translator: sogou
+
+limit: 200
+
+#sanitize_workers: 24 # Google translate server can handle the traffic :)
+sanitize_workers: 0
 num_workers: 4 # for presenting - don't overload Notion server
 
 
