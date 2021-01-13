@@ -14,18 +14,7 @@ import omnifig as fig
 from humpack.farming import Farmer
 
 from notion.client import NotionClient
-try:
-	from googletrans import Translator
-except ImportError:
-	print('WARNING: googletrans is not installed')
-try:
-	import goslate
-except ImportError:
-	print('WARNING: goslate is not installed')
-try:
-	import translators as ts
-except ImportError:
-	print('WARNING: translators is not installed')
+
 
 from langdetect import detect
 
@@ -65,20 +54,36 @@ def article_iterator(responses):
 
 
 def _init(translation_type='goog',**kwargs):
-	
+	try:
+		from googletrans import Translator
+	except ImportError:
+		print('WARNING: googletrans is not installed')
+	try:
+		import goslate
+	except ImportError:
+		print('WARNING: goslate is not installed')
+	try:
+		import translators as ts
+	except ImportError:
+		print('WARNING: translators is not installed')
+
 	if translation_type == 'goog':
 		trans = Translator()
 	elif translation_type == 'goslate':
 		trans = goslate.Goslate()
 	else:
 		trans = ts
-	
-	
+
+
 	#
 	return {'trans': trans}
 	
 
 def _run(raw, raw_titles, trans, language, translation_type='goog',  **kwargs):
+	try:
+		import translators as ts
+	except ImportError:
+		print('WARNING: translators is not installed')
 	cat = raw['category']
 	
 	article = raw.copy()
@@ -127,7 +132,7 @@ def _run(raw, raw_titles, trans, language, translation_type='goog',  **kwargs):
 	return fixed, article
 
 
-@fig.Script('sanitize-news', description='Format/Translate news headlines from json')
+# @fig.Script('sanitize-news', description='Format/Translate news headlines from json')
 def format_news(A):
 	
 	# silent = A.pull('silent', False, silent=True) # TODO
