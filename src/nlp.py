@@ -267,6 +267,9 @@ def format_news(A):
 	print(f'Fixed {fixed}/{total} articles (skipping {len(raw) - total})')
 	
 	full = []
+	if os.path.isfile(out_path):
+		full = load_response(out_path)
+		print(f'Loaded {len(full)} translated articles')
 	
 	mnames = {}
 	for lang, arts in langs.items():
