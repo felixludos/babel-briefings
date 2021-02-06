@@ -11,9 +11,8 @@ translator: sogou
 
 limit: 200
 
-#sanitize_workers: 24 # Google translate server can handle the traffic :)
 sanitize_workers: 0
-num_workers: 4 # for presenting - don't overload Notion server
-
+#num_workers: 4 # for presenting - don't overload Notion server
+num_workers: 0
 
 

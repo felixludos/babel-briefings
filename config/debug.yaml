@@ -13,7 +13,7 @@
 ##categories: all
 #skip_existing: True
 #
-##skip_confirm: True
+#skip_confirm: True
 #
 #
 ##################################
@@ -40,11 +40,13 @@
 _meta.script_name: present-notion
 #
 #resume: True
-#num_workers: 0
+num_workers: 0
 
 parents: ['usual']
 
-#remove_existing: False
+#skip_confirm: True
+
+remove_existing: False
 
 #skip_existing: False
 

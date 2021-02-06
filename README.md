@@ -5,7 +5,7 @@
 
 ## For more information about the project visit the [project page](https://www.notion.so/felixleeb/No-Nonsense-News-0ecebf66967147dda6a96b549c7a73d1)
 
-Here are a few scripts to scrape news headlines from all over the world using News API, format and translate them using Google Translate, and display the articles on a Notion page - all from the comfort of python.
+Here are a few scripts to scrape news headlines from all over the world using [News API](https://newsapi.org/), translate them with the [Helsinki-NLP](https://blogs.helsinki.fi/language-technology/) [Marian](https://marian-nmt.github.io/) machine translation models (using [HuggingFace](https://huggingface.co/)), and display the articles on a Notion page - all from the comfort of python.
 
 # Usage
 
@@ -33,8 +33,6 @@ Due to the high volume of requests sent to the Notion server, you may receive an
 python main.py usual --resume
 ```
 
-If the error pops up more than 4-5 times, you can also try decreasing the number of workers used to upload the articles to the table (using `--num_workerss 2`, default is 4).
-
 Each of the three steps can be done separately using:
 
 ```bash
@@ -47,7 +45,7 @@ fig present-notion usual
 
 # Performance
 
-Scraping all top headline articles for all countries and all categories, requires about 350 requests to the News API, and takes less than ten minutes and collects around 1700-2000 articles. Thanks to parallelism, formatting and translating the articles is significantly faster and takes around two minutes. Finally, presenting the articles on Notion is somewhat problematic because with parallelism it can be done in less than five minutes, however all the necessary requests sent to the Notion server overload it. As a result, the number of workers must be decreased. In practice, a full update takes around 15-20 minutes, however the last step may require a few tries to coax the Notion servers into accepting all requests and to display all the articles.
+Scraping all top headline articles for all countries and all categories, requires about 350 requests to the News API, and takes less than ten minutes and collects around 1700-2000 articles. Thanks to parallelism, formatting and translating the articles is significantly faster and takes around two minutes. Finally, presenting the articles on Notion is somewhat problematic because with parallelism it can be done in less than five minutes, however all the necessary requests sent to the Notion server overload it. As a result, the number of workers must be decreased. In practice, a full update takes around 15-20 minutes, however the last step may require a few tries to coax the Notion servers into accepting all requests and to display.
 
 Nevertheless, I reckon this performance is sufficient for a common use case to be: you run the script while making breakfast, and then by the time you are back at your computer, over a thousand headlines from all over the world are there to greet you. (Perhaps more important use case focuses more on the scraping and formatting steps to provide a dataset of headlines from all over the world for various NLP settings and analysis).
 

@@ -9,8 +9,11 @@ import pytz
 from datetime import datetime
 from itertools import product
 
+from argparse import Namespace
+
 import omnifig as fig
 
+import requests
 from newsapi.newsapi_exception import NewsAPIException
 from newsapi import NewsApiClient
 
@@ -44,9 +47,19 @@ class Multi_News_API_Client:
 					retry = True
 				else:
 					retry = response['status'] != 'ok' and self.auto_retry
+					if retry:
+						print(response)
+						self.restart_client()
+					# if retry and 'code' in response:
+					# 	if response['code'] == 'rateLimited':
+					# 		self.restart_client()
+					# 	else:
+					# 		raise Exception(response)
 				
 		return response
 		
+	def _get_client(self, key):
+		return NewsApiClient(api_key=key)
 		
 	def restart_client(self):
 		self.idx += 1
@@ -56,9 +69,30 @@ class Multi_News_API_Client:
 			# return
 		elif not self.silent:
 			print(f'Using key {self.idx+1}/{len(self.keys)}')
-		self.client = NewsApiClient(api_key=self.keys[self.idx])
+		self.client = self._get_client(self.keys[self.idx])
 
+class Requests_Client(Multi_News_API_Client):
+	def __init__(self, *args, **kwargs):
+		self._client = Namespace(get_top_headlines=self._request_headlines)
+		super().__init__(*args, **kwargs)
+		self.url_base = 'http://newsapi.org/v2/top-headlines?country={country}&category={category}&apiKey={apikey}'
 
+		
+	def _request_headlines(self, **params):
+		
+		params['apikey'] = self.client.key
+		
+		url = self.url_base.format(**params)
+		
+		out = requests.get(url)
+		
+		return out.json()
+
+	
+	def _get_client(self, key):
+		self._client.key = key
+		return self._client
+	
 @fig.Script('scrape-news', description='Scrape news using News API')
 def scrape_news(A):
 	
@@ -76,7 +110,8 @@ def scrape_news(A):
 	if not silent:
 		print(f'Found {len(api_keys)} News API keys.')
 	
-	newsapi = Multi_News_API_Client(*api_keys)
+	# newsapi = Multi_News_API_Client(*api_keys)
+	newsapi = Requests_Client(*api_keys)
 	
 	root = A.pull('root', os.path.join(THIS_DIR, 'raw_news'))
 	if not os.path.isdir(root):

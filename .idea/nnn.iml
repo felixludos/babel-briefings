@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/present_news" />
       <excludeFolder url="file://$MODULE_DIR$/raw_news" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

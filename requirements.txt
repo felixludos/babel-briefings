@@ -1,5 +1,5 @@
 omnifig
 newsapi-python
 googletrans
-git+git://github.com/path/felixludos/notion-py#egg=notion-py
+notion
 emoji
