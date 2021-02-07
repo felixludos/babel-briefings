@@ -76,7 +76,7 @@ class Requests_Client(Multi_News_API_Client):
 		self._client = Namespace(get_top_headlines=self._request_headlines)
 		super().__init__(*args, **kwargs)
 		self.url_base = 'http://newsapi.org/v2/top-headlines?country={country}&category={category}&apiKey={apikey}' \
-		                'pageSize=100'
+		                '&pageSize=100'
 
 		
 	def _request_headlines(self, **params):
