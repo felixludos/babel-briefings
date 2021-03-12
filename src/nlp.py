@@ -263,6 +263,7 @@ def format_news(A):
 			fixed += 1
 			
 	total = sum(map(len,langs.values()))
+	# print(langs.keys()) # testing
 	
 	print(f'Fixed {fixed}/{total} articles (skipping {len(raw) - total})')
 	
@@ -270,9 +271,18 @@ def format_news(A):
 	if os.path.isfile(out_path):
 		full = load_response(out_path)
 		print(f'Loaded {len(full)} translated articles')
+
+	progress = 0
 	
 	mnames = {}
 	for lang, arts in langs.items():
+		if lang == 'eng' or lang == 'en':
+			progress += len(arts)
+			for art in arts:
+				art['original_title'] = art['title']
+			full.extend(arts)
+			continue
+		
 		mname = TRANSLATION_MODELS.get(lang, None)
 		if mname is None:
 			mname = 'Helsinki-NLP/opus-mt-mul-en'
@@ -283,7 +293,8 @@ def format_news(A):
 			mnames[mname] = lang, []
 		mnames[mname][1].extend(arts)
 	
-	progress = 0
+	save_response(full, out_path)
+	print(f'Saved eng')
 	
 	for mname, (lang, arts) in mnames.items():
 		
