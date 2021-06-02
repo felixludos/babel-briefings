@@ -9,6 +9,8 @@ categories: [general] # for formatting/presenting
 
 translator: sogou
 
+batch_size: 6
+
 limit: 200
 
 sanitize_workers: 0

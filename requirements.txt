@@ -1,5 +1,8 @@
 omnifig
-newsapi-python
-googletrans
 notion
+wget
 emoji
+pytz
+iso-639
+fasttext
+transformers

@@ -12,7 +12,7 @@ import pytz
 import wget
 import fasttext
 from iso639 import languages
-from langdetect import detect
+# from langdetect import detect
 
 from collections import Counter
 from pathlib import Path
@@ -312,7 +312,8 @@ def format_news(A):
 		
 		darts, descs = zip(*[(art,art['description']) for art in arts
 		                    if art['description'] is not None and len(art['description'])])
-		out_desc = model(descs)
+		with torch.no_grad():
+			out_desc = model(descs)
 		for art, trans_desc in zip(darts, out_desc):
 			art['description'] = trans_desc
 		

@@ -21,6 +21,8 @@ import emoji
 from notion.client import NotionClient
 from notion import block as nt
 
+from iso639 import languages
+
 from .common import NATION_CODES, CATEGORIES, LANGUAGE_CODES, LANGUAGE_NATIONS
 
 
@@ -115,7 +117,6 @@ def get_nation_names(with_emoji=True):
 	
 	return nations
 
-from iso639 import languages
 
 def get_language_code(lang, as_emoji=True, procs=False):
 	

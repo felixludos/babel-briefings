@@ -14,8 +14,8 @@ from argparse import Namespace
 import omnifig as fig
 
 import requests
-from newsapi.newsapi_exception import NewsAPIException
-from newsapi import NewsApiClient
+# from newsapi.newsapi_exception import NewsAPIException
+# from newsapi import NewsApiClient
 
 from .common import THIS_DIR, MissingTokenError, BadStatusError, save_response, NATION_CODES, CATEGORIES
 
@@ -58,8 +58,8 @@ class Multi_News_API_Client:
 				
 		return response
 		
-	def _get_client(self, key):
-		return NewsApiClient(api_key=key)
+	# def _get_client(self, key):
+	# 	return NewsApiClient(api_key=key)
 		
 	def restart_client(self):
 		self.idx += 1
@@ -236,7 +236,7 @@ def scrape_news(A):
 		try:
 			response = newsapi.get_top_headlines(category=cat, country=nation, page_size=100)
 
-		except NewsAPIException as e:
+		except Exception as e:
 			
 			print(f'Using News API key number {newsapi.idx+1}, starts with: {newsapi.keys[newsapi.idx][:4]}...')
 			
