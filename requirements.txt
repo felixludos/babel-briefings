@@ -4,5 +4,6 @@ wget
 emoji
 pytz
 iso-639
+sentencepiece
 fasttext
 transformers
