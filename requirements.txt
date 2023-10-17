@@ -8,3 +8,4 @@ sentencepiece
 fasttext
 transformers
 pycountry
+pycld2

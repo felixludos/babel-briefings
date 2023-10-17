@@ -17,6 +17,7 @@ from notion.client import NotionClient
 
 
 # from langdetect import detect
+# from pycld2 import detect
 
 
 from .common import THIS_DIR, NATION_CODES, CATEGORIES, \

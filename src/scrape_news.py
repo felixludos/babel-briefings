@@ -94,13 +94,13 @@ class Requests_Client(Multi_News_API_Client):
 		self._client.key = key
 		return self._client
 	
-@fig.Script('scrape-news', description='Scrape news using News API')
+@fig.script('scrape-news', description='Scrape news using News API')
 def scrape_news(A):
 	
 	silent = A.pull('silent', False, silent=True)
 	
-	api_keys = A.pull('news_api_keys', '<>news_api_key', '<>api_keys', '<>api_key',
-	                 os.environ.get('NEWS_API_KEY', None), silent=True)
+	api_keys = A.pulls('news_api_keys', 'news_api_key', 'api_keys', 'api_key',
+	                 default=os.environ.get('NEWS_API_KEY', None), silent=True)
 	if api_keys is None or len(api_keys) == 0:
 		raise MissingTokenError('You must specify a News API Token (either using "--api_key" arg or by setting '
 		                        '"NEWS_API_KEY" environment variable)')
@@ -150,7 +150,7 @@ def scrape_news(A):
 	
 	news_dir = os.path.join(today_dir, now)
 	
-	cats = A.pull('scrape_categories', '<>categories', 'general')
+	cats = A.pulls('scrape_categories', 'categories', default='general')
 	
 	if isinstance(cats, str):
 		if cats == 'all':

@@ -192,7 +192,7 @@ def recognize_language(code):
 	elif 'zh' in code:
 		return languages.part1['zh'].part2b
 
-@fig.Script('nlp-news', description='Format/Translate news headlines from json (using NLP models)')
+@fig.script('nlp-news', description='Format/Translate news headlines from json (using NLP models)')
 def format_news(A):
 	# silent = A.pull('silent', False, silent=True) # TODO
 	

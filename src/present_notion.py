@@ -39,7 +39,7 @@ CATEGORIES_COLORS = {
 }
 
 def load_client_page(A, silent=False):
-	token = A.pull('notion_token', '<>token', os.environ.get('NOTION_TOKEN', None), silent=True)
+	token = A.pulls('notion_token', 'token', default=os.environ.get('NOTION_TOKEN', None), silent=True)
 	
 	if token is None:
 		raise MissingTokenError('You must specify a News API Token (either using "--token" arg or by setting '
@@ -47,7 +47,7 @@ def load_client_page(A, silent=False):
 	
 	client = NotionClient(token_v2=token)
 	
-	link = A.pull('notion_link', '<>link', None, silent=silent)
+	link = A.pulls('notion_link', 'link', default=None, silent=silent)
 	
 	if link is None:
 		raise MissingLinkError('You must provide a link to the notion table that should be used as a news database')
@@ -149,7 +149,7 @@ def get_language_names(as_emoji=True):
 	return set(get_language_code(code,  as_emoji=as_emoji) for code in LANGUAGE_NATIONS)
 
 
-@fig.AutoComponent('schema/full_table')
+@fig.autocomponent('schema/full_table')
 def full_table_schema(with_emoji=True):
 	
 	nation_options = [{'id' :str(uuid.uuid4()), 'color' :'default', 'value' :n}
@@ -175,7 +175,7 @@ def full_table_schema(with_emoji=True):
 	return sch
 
 
-@fig.AutoComponent('schema/news_table')
+@fig.autocomponent('schema/news_table')
 def full_table_schema(with_emoji=True, language_emojis=False):
 	nation_options = [{'id': str(uuid.uuid4()), 'color': 'default', 'value': n}
 	                  for n in get_nation_names(with_emoji=with_emoji).values()]
@@ -224,8 +224,8 @@ def get_view(cvb, view_type='table'):
 			return view
 	return cvb.views.add_new(view_type=view_type)
 
-@fig.AutoComponent('row_formatter')
-class Notion_Formatter:
+@fig.component('row_formatter')
+class Notion_Formatter(fig.Configurable):
 	def __init__(self, with_emoji=True, language_emojis=False, language='en', include_icons=True):
 		
 		self.with_emoji = with_emoji
@@ -368,7 +368,7 @@ class Notion_Formatter:
 
 
 
-@fig.Script('new-notion-table', description='Create new notion table on the provided page')
+@fig.script('new-notion-table', description='Create new notion table on the provided page')
 def new_table(A):
 	
 	client, page = load_client_page(A)
