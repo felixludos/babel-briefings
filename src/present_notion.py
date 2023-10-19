@@ -13,7 +13,7 @@ import random
 
 from requests import HTTPError
 
-from humpack.farming import Farmer
+# from humpack.farming import Farmer
 
 import omnifig as fig
 
