@@ -5,6 +5,15 @@ let currentIndex = 0;
 let pastData = [];
 let currentData = [];
 
+const statusline = document.getElementById('statusline');
+const playbutton = document.getElementById('automatic');
+
+let statusName = 'Paused';
+let interval;
+let isPlaying = false;
+let i;
+
+
 function loadPastHeadlines() {
     return fetch('completed/completed_hk.jsonl')
         .then(response => response.text())
@@ -56,10 +65,25 @@ function displayRecords() {
     // Clear the table body
     tableBody.innerHTML = '';
 
+    if (currentIndex >= currentData.length) {
+        i = 0;
+        alert('No more records to display!');
+
+        if (isPlaying) {
+            isPlaying = false;
+            clearInterval(interval);
+            playbutton.textContent = 'Play';
+            statusName = 'Done';
+            statusline.textContent = `${statusName}: showing ${i} - completed ${currentIndex}/${currentData.length} (${currentData.length - currentIndex} records left)`;
+        }
+
+        return;
+    }
+
     // Display the records
-    for (let i = 0; i < numRecords && currentIndex + i < currentData.length; i++) {
+    for (i = 0; i < numRecords && currentIndex + i < currentData.length; i++) {
         const record = currentData[currentIndex + i];
-        console.log(currentIndex + i, record);
+        // console.log(currentIndex + i, record);
         
         const row = tableBody.insertRow(-1);
         
@@ -73,8 +97,35 @@ function displayRecords() {
         descriptionCell.textContent = record.description || ''; // Use empty string if description is not available
     }
 
-    currentIndex += numRecords;
+    statusline.textContent = `${statusName}: showing ${i} - completed ${currentIndex}/${currentData.length} (${currentData.length - currentIndex} records left)`;
+
+    currentIndex += i;
 }
+
+
+document.getElementById('automatic').addEventListener('click', function() {
+    if (!isPlaying) {
+        isPlaying = true;
+        // Start the interval
+        interval = setInterval(function() {
+            document.getElementById('saveAndNext').click();
+        }, parseInt(document.getElementById('autotimer').value)); // Change 5000 to your desired interval (in milliseconds)
+        playbutton.textContent = 'Pause';
+        statusName = 'Running';
+
+        statusline.textContent = `${statusName}: showing ${i} - completed ${currentIndex}/${currentData.length} (${currentData.length - currentIndex} records left)`;
+
+    } else {
+        isPlaying = false;
+        clearInterval(interval);
+        playbutton.textContent = 'Play';
+        statusName = 'Paused';
+
+        statusline.textContent = `${statusName}: showing ${i} - completed ${currentIndex}/${currentData.length} (${currentData.length - currentIndex} records left)`;
+
+    }
+});
+
 
 document.getElementById('saveAndNext').addEventListener('click', function() {
     // Save the currently displayed records to a local file
@@ -100,7 +151,7 @@ document.getElementById('saveAndNext').addEventListener('click', function() {
     
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "saved_records_demo.jsonl";
+    link.download = "saved_records_demo.jsonl"; // loc
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

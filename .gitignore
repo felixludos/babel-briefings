@@ -11,6 +11,8 @@ __pycache__/
 *$py.class
 
 .idea/
+prompts/
+completed/
 
 # C extensions
 *.so
