@@ -17,19 +17,6 @@ let isPlaying = false;
 let i;
 
 
-// function loadPastHeadlines() {
-//     return fetch(completed_path)
-//         .then(response => response.text())
-//         .then(data => {
-//             pastData = data.split('\n').map(line => JSON.parse(line));
-//         })
-//         .catch(error => {
-//             pastData = [];
-//             // console.error('Error loading past headlines:', error);
-//         });
-// }
-
-
 function loadAndFilterHeadlines() {
     fetch(prompt_path)
         .then(response => response.text())
