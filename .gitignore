@@ -4,7 +4,7 @@ raw_news/
 clean_news/
 present_news/
 scratch.ipynb
-
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
