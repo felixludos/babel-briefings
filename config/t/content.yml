@@ -1,0 +1,8 @@
+
+blobroot: /home/fleeb/Downloads
+
+
+promptpath: simple_interface/prompts.jsonl
+completedpath: simple_interface/completed/completed_{loc}.jsonl
+
+articleroot: /home/fleeb/workspace/local_data/nnn/global-news-headlines

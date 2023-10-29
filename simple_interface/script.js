@@ -17,6 +17,7 @@ let interval;
 let isPlaying = false;
 
 
+
 function loadPrompts() {
     fetch(prompt_path)
         .then(response => response.text())
@@ -112,8 +113,7 @@ document.getElementById('automatic').addEventListener('click', function() {
     }
 });
 
-
-document.getElementById('saveAndNext').addEventListener('click', function() {
+function saveCurrentRecords() {
     // Save the currently displayed records to a local file
     const tableBody = document.getElementById('tableBody');
     const rows = tableBody.rows;
@@ -125,10 +125,12 @@ document.getElementById('saveAndNext').addEventListener('click', function() {
         const result = cells[i % numColumns].textContent;
 
         recordsToSave.push({
-            ID: currentIDs[i],
+            id: currentIDs[i],
             result: result
         });
     }
+    
+    currentIDs = [];
 
     const blob = new Blob([recordsToSave.map(record => JSON.stringify(record)).join('\n')], {type: "text/plain;charset=utf-8"});
     
@@ -141,7 +143,18 @@ document.getElementById('saveAndNext').addEventListener('click', function() {
 
     // Display the next set of records
     displayRecords();
+}
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === ' ') {
+        // console.log('Spacebar was pressed!');
+        saveCurrentRecords();
+    }
 });
+
+
+document.getElementById('saveAndNext').addEventListener('click', saveCurrentRecords);
 
 
 

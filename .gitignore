@@ -3,6 +3,7 @@ extra/
 raw_news/
 clean_news/
 present_news/
+simple_interface/prompts.jsonl
 scratch.ipynb
 
 # Byte-compiled / optimized / DLL files
@@ -13,6 +14,7 @@ __pycache__/
 .idea/
 prompts/
 completed/
+simple_interface/completed/
 
 # C extensions
 *.so

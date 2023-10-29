@@ -77,16 +77,23 @@
 #_meta.script_name: clean-prompts
 #_meta.script_name: loc-prompts
 
-blobroot: /home/fleeb/Downloads
+#_meta.script_name: loc-content
+_meta.script_name: save-content
 
-#accept: yes
+_base: [t/content]
 
-#loc: ch
+loc: ae
 
-promptpath: interface/prompts/prompts-{loc}.jsonl
-completedpath: interface/completed/completed_{loc}.jsonl
-
-articleroot: /home/fleeb/workspace/local_data/nnn/global-news-headlines
+#blobroot: /home/fleeb/Downloads
+#
+##accept: yes
+#
+##loc: ch
+#
+#promptpath: interface/prompts/prompts-{loc}.jsonl
+#completedpath: interface/completed/completed_{loc}.jsonl
+#
+#articleroot: /home/fleeb/workspace/local_data/nnn/global-news-headlines
 
 
 
