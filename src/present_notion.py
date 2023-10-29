@@ -17,9 +17,9 @@ from requests import HTTPError
 
 import omnifig as fig
 
-import emoji
-from notion.client import NotionClient
-from notion import block as nt
+# import emoji
+# from notion.client import NotionClient
+# from notion import block as nt
 
 from iso639 import languages
 
@@ -426,7 +426,7 @@ def _init(A, table_id):
 	return {'formatter': formatter}
 
 
-@fig.Script('present-notion', description='Present world news on Notion page')
+@fig.script('present-notion', description='Present world news on Notion page')
 def present_notion(A):
 	
 	silent = A.pull('silent', False, silent=True)

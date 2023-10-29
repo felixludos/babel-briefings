@@ -2,5 +2,5 @@
 name: 'nnn'
 long_name: 'No-Nonsense-News'
 
-src: main.py
+module: src
 

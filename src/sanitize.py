@@ -11,9 +11,9 @@ from datetime import datetime
 from itertools import product
 
 import omnifig as fig
-from humpack.farming import Farmer
+# from humpack.farming import Farmer
 
-from notion.client import NotionClient
+# from notion.client import NotionClient
 
 
 # from langdetect import detect

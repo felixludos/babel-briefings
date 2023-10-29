@@ -1,5 +1,8 @@
 
-// let currentData = mockData.split('\n').map(line => JSON.parse(line));
+const loc_code = 'ph';
+const prompt_path = `prompts/prompts-${loc_code}.jsonl`;
+// const completed_path = `completed/completed_${loc_code}.jsonl`;
+
 let currentIndex = 0;
 
 let pastData = [];
@@ -14,36 +17,27 @@ let isPlaying = false;
 let i;
 
 
-function loadPastHeadlines() {
-    return fetch('completed/completed_hk.jsonl')
-        .then(response => response.text())
-        .then(data => {
-            pastData = data.split('\n').map(line => JSON.parse(line));
-        });
-}
-
-// // Load headlines from the local "headlines.jsonl" file
-// function loadHeadlines() {
-//     fetch('prompts/demo-prompts.jsonl')
+// function loadPastHeadlines() {
+//     return fetch(completed_path)
 //         .then(response => response.text())
 //         .then(data => {
-//             currentData = data.split('\n').map(line => JSON.parse(line));
-//             // Initial display after data is loaded
-//             displayRecords();
+//             pastData = data.split('\n').map(line => JSON.parse(line));
 //         })
 //         .catch(error => {
-//             console.error('Error loading headlines:', error);
+//             pastData = [];
+//             // console.error('Error loading past headlines:', error);
 //         });
 // }
 
+
 function loadAndFilterHeadlines() {
-    fetch('prompts/demo-prompts.jsonl')
+    fetch(prompt_path)
         .then(response => response.text())
         .then(data => {
             const rawData = data.split('\n').map(line => JSON.parse(line));
             const pastIDs = pastData.flatMap(record => record.ID);
 
-            console.log(pastIDs)
+            // console.log(pastIDs);
 
             // Filter out headlines that have any ID present in the past headlines
             currentData = rawData.filter(record => {
@@ -141,8 +135,8 @@ document.getElementById('saveAndNext').addEventListener('click', function() {
         const description = cells[2].textContent;
 
         recordsToSave.push({
-            ID: id,
-            headline: headline,
+            ids: id,
+            title: headline,
             description: description || undefined
         });
     }
@@ -151,7 +145,7 @@ document.getElementById('saveAndNext').addEventListener('click', function() {
     
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "saved_records_demo.jsonl"; // loc
+    link.download = `saved_records_${loc_code}.jsonl`; // loc
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -162,38 +156,7 @@ document.getElementById('saveAndNext').addEventListener('click', function() {
 
 
 
-loadPastHeadlines().then(loadAndFilterHeadlines);
+loadAndFilterHeadlines();
 
-
-
-// Load the headlines
-// loadHeadlines();
-
-
-
-// function displayRecords() {
-//     const numRecords = parseInt(document.getElementById('numRecords').value);
-//     const tableBody = document.getElementById('tableBody');
-
-//     // Clear the table body
-//     tableBody.innerHTML = '';
-
-//     // Display the records
-//     for (let i = 0; i < numRecords && currentIndex + i < currentData.length; i++) {
-//         const record = currentData[currentIndex + i];
-//         const row = tableBody.insertRow(-1);
-        
-//         const idCell = row.insertCell(0);
-//         idCell.textContent = record.ID.join(', ');
-
-//         const headlineCell = row.insertCell(1);
-//         headlineCell.textContent = record.headline;
-
-//         const descriptionCell = row.insertCell(2);
-//         descriptionCell.textContent = record.description || ''; // Use empty string if description is not available
-//     }
-
-//     currentIndex += numRecords;
-// }
 
 

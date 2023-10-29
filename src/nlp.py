@@ -9,7 +9,7 @@ from transformers import MarianTokenizer, MarianMTModel
 from typing import List
 
 import pytz
-import wget
+# import wget
 import fasttext
 from iso639 import languages
 # from langdetect import detect
