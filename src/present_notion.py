@@ -21,7 +21,7 @@ import omnifig as fig
 # from notion.client import NotionClient
 # from notion import block as nt
 
-from iso639 import languages
+# from iso639 import languages
 
 from .common import NATION_CODES, CATEGORIES, LANGUAGE_CODES, LANGUAGE_NATIONS
 

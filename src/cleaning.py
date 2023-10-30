@@ -9,7 +9,7 @@ import omnifig as fig
 
 
 def load_jsonl(path):
-	return [json.loads(line) for line in path.read_text().split('\n') if len(line)]
+	return [json.loads(line) for line in path.read_text(encoding="utf8").split('\n') if len(line)]
 def save_jsonl(path, records):
 	path.write_text('\n'.join(json.dumps(line) for line in records))
 # def save_jsonl_dict(path, data):

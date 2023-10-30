@@ -10,8 +10,8 @@ from typing import List
 
 import pytz
 # import wget
-import fasttext
-from iso639 import languages
+# import fasttext
+# from iso639 import languages
 # from langdetect import detect
 
 from collections import Counter

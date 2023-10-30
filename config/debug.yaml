@@ -82,7 +82,7 @@ _meta.script_name: save-content
 
 _base: [t/content]
 
-loc: ae
+loc: pt
 
 #blobroot: /home/fleeb/Downloads
 #
