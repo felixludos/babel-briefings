@@ -44,7 +44,7 @@ The dataset is provided in the form of 54 JSON files, one for each location cont
 
 Here are a few basic summary statistics about the dataset.
 
-### Articles by Lanugage
+### Articles by Language
 
 | Code   | Language   |   Articles | Locations                                          |
 |--------|------------|------------|----------------------------------------------------|
