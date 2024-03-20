@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babel Briefings Dataset</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/json-formatter-js@2.3.4/dist/json-formatter.umd.min.js"></script>
+    <!-- <script type="text/javascript" src="pretty-json-min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/json-formatter-js@2.3.0/dist/json-formatter.min.js"></script> -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Babel Briefings: A Multilingual News Headline Dataset</h1>
+            <p>Presented at NAACL 2024 by Felix Leeb and others</p>
+        </header>
+        
+        <section id="samples">
+            <h2>Explore Dataset Samples</h2>
+
+            <section id="resampling">
+                <div id="resamplingButtons">
+                    <div>
+                        <button class="shuffle-button" id="resampleButton">Shuffle</button>
+                        <span>
+                            <label><strong>Category:</strong></label>
+                            <span id="categoryButtons"></span>
+                        </span>
+                    </div>
+                    <div>
+                        <label><strong>Languages:</strong></label>
+                        <span id="languageButtons"></span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="sample-container" id="visualization"></div>
+            <div class="sample-container">
+                <pre id="jsonDataContainer"></pre>
+            </div>
+        </section>
+        
+        <footer>
+            Babel Briefings Dataset © 2024 by Felix Leeb is licensed under CC BY-NC-SA 4.0
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
