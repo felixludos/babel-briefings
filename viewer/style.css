@@ -5,6 +5,11 @@ body {
     padding: 20px;
     box-sizing: border-box;
 }
+
+.title {
+    text-align: center;
+}
+
 .container {
     max-width: 800px;
     margin: auto;
@@ -29,6 +34,14 @@ footer {
     color: #999;
 }
 
+.subtitle-details {
+    font-size: 16px;
+    color: #666;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .sample-container {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -36,15 +49,15 @@ footer {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+
 .sample-image {
     /* max-width: 100%; */
-    max-width: 200px;
+    /* max-width: 200px; */
+    max-width: 250px;
     height: auto;
     border-radius: 5px;
-}
-.sample-title {
-    font-size: 24px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .sample-meta {
     font-size: 14px;
@@ -55,15 +68,53 @@ footer {
     font-size: 16px;
     margin-top: 10px;
 }
-.sample-link {
-    margin-top: 10px;
+
+.instance-cards {
+    display: flex;
+    overflow-x: auto;
+    /* flex-wrap: wrap; */
+    
+    /* justify-content: space-between; */
+    margin: 5px 0;
+}
+
+.instance-card {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Reduced margin */
+    padding: 5px; /* Reduced padding */
+    margin-left: 5px;
+    border: 1px solid #ccc;
+    /* box-sizing: border-box; */
+    /* transition: all 0.3s ease; */
+}
+
+.instance-date, .instance-location, .instance-category {
     display: inline-block;
+    margin-bottom: 5px;
+}
+
+.instance-date {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.instance-location, .instance-category {
+    font-size: 1.1em;
+    color: #343a40;
+}
+
+
+.sample-link {
+    /* margin-top: 10px; */
+    /* display: inline-block; */
     background-color: #007bff;
     color: white;
     padding: 10px 15px;
     text-decoration: none;
     border-radius: 5px;
 }
+
 #jsonDataContainer {
     white-space: pre-wrap;      /* CSS 3 */
     white-space: -moz-pre-wrap; /* Firefox */
@@ -165,4 +216,22 @@ footer {
 
 .language-button:active, .location-button:active, .category-button:active, .shuffle-button:active {
     transform: scale(0.9);
+}
+
+pre {
+    font-family: 'Courier New', Courier, monospace; */
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    white-space: pre-wrap;
+    border-radius: 5px;
+    padding: 10px;
+    /* word-wrap: break-word; */
+}
+
+.download-button {
+    height: 30px;
+    padding: 10px;
+    overflow-x: auto;
+    margin-left: 10px;
+    margin-right: 10px;
 }

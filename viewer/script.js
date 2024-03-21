@@ -5,6 +5,8 @@ const location_names = {"gb": "United Kingdom", "ar": "Argentina", "pl": "Poland
 const language_names = {"en": "English", "ko": "Korean", "ru": "Russian", "es": "Spanish", "pt": "Portuguese", "cs": "Czech", "tr": "Turkish", "nl": "Dutch", "ar": "Arabic", "fr": "French", "bg": "Bulgarian", "id": "Indonesian", "sk": "Slovak", "el": "Greek", "he": "Hebrew", "sr": "Serbian", "hu": "Hungarian", "th": "Thai", "zh": "Chinese", "no": "Norwegian", "sl": "Slovenian", "sv": "Swedish", "de": "German", "lv": "Latvian", "pl": "Polish", "it": "Italian", "ro": "Romanian", "lt": "Lithuanian", "ja": "Japanese", "uk": "Ukrainian"};
 const category_names = {"general": "General", "business": "Business", "entertainment": "Entertainment", "health": "Health", "science": "Science", "sports": "Sports", "technology": "Technology"};
 
+const nonlatin_alphabets = ['ar', 'he', 'ja', 'ko', 'zh', 'ru', 'uk', 'el'];
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Simulate loading sample data
@@ -15,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
             function displaySamples(sampleData) {
 
                 let viz = document.getElementById('visualization');
+
+                viz.innerHTML = '';
 
                 
                 if (sampleData.language) {
@@ -33,6 +37,273 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     viz.appendChild(block);
                 }
+
+                if (sampleData.title) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    // block.style.marginTop = '3px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'title';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('h3');
+                    value.classList.add('sample-value');
+                    value.textContent = sampleData.title;
+                    value.style.marginTop = '3px';
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData['en-title']) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    block.style.marginTop = '-20px';
+                    block.style.marginBottom = '20px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'en-title';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    value.textContent = sampleData['en-title'];
+                    value.style.color = '#666';
+                    value.style.fontWeight = 'bold';
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData.publishedAt) {
+                    let block = document.createElement('span');
+                    block.classList.add('sample-item');
+                    block.style.marginBottom = '10px';
+
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'publishedAt';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    let publishedAt = new Date(sampleData.publishedAt);
+                    let formattedDate = publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                    value.textContent = formattedDate;
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData['source-name']) {
+                    let block = document.createElement('span');
+                    block.classList.add('sample-item');
+                    block.style.marginLeft = '30px';
+                    block.style.marginBottom = '10px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'source-name';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    value.textContent = sampleData['source-name'];
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+
+                }
+
+
+                if (sampleData.description) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    block.style.marginTop = '10px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'description';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    value.textContent = sampleData.description;
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData['en-description']) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    block.style.marginTop = '5px';
+                    block.style.marginBottom = '10px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'en-description';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    value.textContent = sampleData['en-description'];
+                    value.style.color = '#666';
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData.instances) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    block.style.marginTop = '10px';
+                    // block.style.marginBottom = '20px';
+
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'instances';
+                    block.appendChild(tag);
+
+                    let instance_cards = document.createElement('div');
+                    instance_cards.classList.add('instance-cards');
+                    block.appendChild(instance_cards);
+    
+                    sampleData.instances.forEach(instance => {
+                        let card = document.createElement('div');
+                        card.classList.add('instance-card');
+
+                        let dateitem = document.createElement('div');
+                        dateitem.classList.add('instance-date-item');
+
+                        let date_tag = document.createElement('span');
+                        date_tag.classList.add('sample-key');
+                        date_tag.textContent = 'collectedAt';
+                        dateitem.appendChild(date_tag);
+    
+                        let date = document.createElement('span');
+                        date.classList.add('instance-date');
+                        let collectedAt = new Date(instance.collectedAt);
+                        let formattedDate = collectedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                        date.textContent = formattedDate;
+                        dateitem.appendChild(date);
+
+                        card.appendChild(dateitem);
+                        
+                        let locitem = document.createElement('div');
+                        locitem.classList.add('instance-loc-item');
+
+                        let loc_tag = document.createElement('span');
+                        loc_tag.classList.add('sample-key');
+                        loc_tag.textContent = 'location';
+                        locitem.appendChild(loc_tag);
+
+                        let location = document.createElement('span');
+                        location.classList.add('instance-location');
+                        location.textContent = location_names[instance.location];
+                        locitem.appendChild(location);
+
+                        card.appendChild(locitem);
+
+                        let catitem = document.createElement('div');
+                        catitem.classList.add('instance-cat-item');
+
+                        let cat_tag = document.createElement('span');
+                        cat_tag.classList.add('sample-key');
+                        cat_tag.textContent = 'category';
+                        catitem.appendChild(cat_tag);
+                        
+                        let category = document.createElement('div');
+                        category.classList.add('instance-category');
+                        category.textContent = category_names[instance.category];
+                        catitem.appendChild(category);
+
+                        card.appendChild(catitem);
+                        
+                        instance_cards.appendChild(card);
+                    });
+
+                    viz.appendChild(block);
+                }
+
+
+                if (sampleData.urlToImage) {
+                    let block = document.createElement('span');
+                    block.classList.add('sample-item');
+                    block.style.marginRight = '30px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'urlToImage';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('img');
+                    value.classList.add('sample-image');
+                    value.src = sampleData.urlToImage;
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData.url) {
+                    let block = document.createElement('span');
+                    block.classList.add('sample-item');
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'url';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('a');
+                    value.classList.add('sample-link');
+                    value.textContent = 'Link to Full Article';
+                    value.href = sampleData.url;
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData.content && !nonlatin_alphabets.includes(sampleData.language)) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    block.style.marginTop = '20px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'content';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    value.textContent = sampleData.content;
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+                if (sampleData['en-content'] && !nonlatin_alphabets.includes(sampleData.language)) {
+                    let block = document.createElement('div');
+                    block.classList.add('sample-item');
+                    block.style.marginTop = '5px';
+                    
+                    let tag = document.createElement('span');
+                    tag.classList.add('sample-key');
+                    tag.textContent = 'en-content';
+                    block.appendChild(tag);
+
+                    let value = document.createElement('span');
+                    value.classList.add('sample-value');
+                    value.style.color = '#666';
+                    value.textContent = sampleData['en-content'];
+                    block.appendChild(value);
+
+                    viz.appendChild(block);
+                }
+
+
 
                 // viz.appendChild(document.createElement('hr'));
 

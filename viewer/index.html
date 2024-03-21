@@ -12,37 +12,112 @@
 <body>
     <div class="container">
         <header>
-            <h1>Babel Briefings: A Multilingual News Headline Dataset</h1>
-            <p>Presented at NAACL 2024 by Felix Leeb and others</p>
+            <h1 class="title">Babel Briefings</h1>
+            <h2 class="title">A News Headline Dataset from Around the World</h2>
+            <span>
+                <label class="subtitle-details">
+                    <span>4.7M Headlines</span>
+                    <span>30 Languages</span>
+                    <span>Aug 2020 - Nov 2021</span>
+                    <span>54 Locations</span>
+                    <span>7 Categories</span>
+                </label>
+            </span>
+            <p class="title">Presented at NAACL 2024 by 
+                <a href="https://www.felixludos.com" target="_blank">Felix Leeb</a></p>
         </header>
         
+        <section>
+            <h2>Dataset Overview</h2>
+            
+            <p>
+                This dataset contains 4,719,199 news headlines across 30 different languages collected between 8 August 2020 and 29 November 2021. 
+                The headlines were collected using the <a href="https://newsapi.org/" target="_blank">News API</a> by collecting the top headlines (usually about 30-70 articles) 
+                separately for each combination of the 54 locations x 7 categories almost every day. 
+                Note, that the same article may occur more than once across different locations, categories, or dates (which is recorded in the `instances` property), 
+                so in total 7,419,089 instances were collected.
+            </p>
+            
+            <div id="stats"></div>
+        </section>
+
+        <section>
+            <h2>Get the Dataset</h2>
+            <p>The dataset is available for download on HuggingFace and Kaggle, with the code available on GitHub. The associated (short) paper is published in the NAACL 2024 proceedings and available on arXiv.</p>
+            
+            <div>
+                <a href="https://huggingface.co/datasets/felixleeb/babel-briefings" target="_blank">
+                    <img src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg" alt="HuggingFace" class="download-button" />
+                </a>
+                
+                <a href="https://www.kaggle.com/felixleeb/babel-briefings" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Kaggle_logo.png?20140912155123" alt="Kaggle" class="download-button" />
+                </a>
+                
+                <a href="https://www.github.com/felixleeb/babel-briefings" target="_blank">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" class="download-button" />
+                </a>
+
+                <a href="https://arxiv.org/abs/2104.14754" target="_blank">
+                    <img src="https://info.arxiv.org/brand/images/brand-logomark-primary-large.jpg" alt="arXiv" class="download-button" />
+                </a>
+
+            </div>
+            
+        </section>
+
         <section id="samples">
             <h2>Explore Dataset Samples</h2>
+
+            <p>
+                Below you can explore some random samples from the dataset. 
+                You can shuffle, or select based on a specific category, language, or location. 
+                We display the information contained in the dataset as well as the raw JSON data below.
+            </p>
 
             <section id="resampling">
                 <div id="resamplingButtons">
                     <div>
                         <button class="shuffle-button" id="resampleButton">Shuffle</button>
                         <span>
-                            <label><strong>Category:</strong></label>
+                            <label><strong>Categories:</strong></label>
                             <span id="categoryButtons"></span>
                         </span>
                     </div>
                     <div>
-                        <label><strong>Languages:</strong></label>
+                        <label><strong>Languages/Locations:</strong></label>
                         <span id="languageButtons"></span>
                     </div>
                 </div>
             </section>
 
             <div class="sample-container" id="visualization"></div>
-            <div class="sample-container">
+            <!-- <div class="sample-container"> -->
                 <pre id="jsonDataContainer"></pre>
+            <!-- </div> -->
+        </section>
+
+        <section>
+            <h2>Citation</h2>
+            <p>
+                If you use this dataset in your work, please cite the following paper:
+            </p>
+            <!-- bibtex citation -->
+            <div>
+                <pre>
+@inproceedings{leeb2024babel,
+    title={Babel Briefings: A Multilingual News Headline Dataset},
+    author={Leeb, Felix and others},
+    booktitle={Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies},
+    year={2024}
+}</pre>
             </div>
         </section>
+
         
         <footer>
-            Babel Briefings Dataset © 2024 by Felix Leeb is licensed under CC BY-NC-SA 4.0
+            Babel Briefings Dataset © 2024 by Felix Leeb is licensed under
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.
         </footer>
     </div>
     <script src="script.js"></script>
