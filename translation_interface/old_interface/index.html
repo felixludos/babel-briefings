@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Headlines</title>
+    <style>
+        /* Some basic styles for the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        th, td {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Button and Textbox -->
+<button id="saveAndNext">Save and Next</button>
+<input type="number" id="numRecords" value="200">
+
+<input type="number" id="autotimer" value="1000">
+<button id="automatic">Play</button>
+<h1 id="statusline">Waiting</h1>
+
+<!-- News Headlines Table -->
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Headline</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        <!-- Rows will be populated here -->
+    </tbody>
+</table>
+
+<!-- JavaScript code will be added here -->
+
+<script src="script.js"></script>
+</body>
+</html>

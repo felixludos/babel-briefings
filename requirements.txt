@@ -1,3 +1,5 @@
+tqdm
+tabulate
 omnifig
 notion
 wget
@@ -8,3 +10,4 @@ sentencepiece
 fasttext
 transformers
 pycountry
+pycld2

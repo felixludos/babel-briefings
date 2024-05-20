@@ -9,9 +9,9 @@ from transformers import MarianTokenizer, MarianMTModel
 from typing import List
 
 import pytz
-import wget
-import fasttext
-from iso639 import languages
+# import wget
+# import fasttext
+# from iso639 import languages
 # from langdetect import detect
 
 from collections import Counter
@@ -192,7 +192,7 @@ def recognize_language(code):
 	elif 'zh' in code:
 		return languages.part1['zh'].part2b
 
-@fig.Script('nlp-news', description='Format/Translate news headlines from json (using NLP models)')
+@fig.script('nlp-news', description='Format/Translate news headlines from json (using NLP models)')
 def format_news(A):
 	# silent = A.pull('silent', False, silent=True) # TODO
 	

@@ -37,20 +37,20 @@
 ### present-notion
 ########################
 
-_meta.script_name: present-notion
+#_meta.script_name: present-notion
+##
+##resume: True
+#num_workers: 0
 #
-#resume: True
-num_workers: 0
-
-parents: ['usual']
-
-#skip_confirm: True
-
-remove_existing: False
-
-#skip_existing: False
-
-#resume: True
+#parents: ['usual']
+#
+##skip_confirm: True
+#
+#remove_existing: False
+#
+##skip_existing: False
+#
+##resume: True
 
 #
 #parents: ['news_table']
@@ -69,3 +69,31 @@ remove_existing: False
 #
 #
 #
+
+####################
+### clean prompts (dataset formatting)
+####################
+
+#_meta.script_name: clean-prompts
+#_meta.script_name: loc-prompts
+
+#_meta.script_name: loc-content
+_meta.script_name: save-content
+
+_base: [t/content]
+
+loc: pt
+
+#blobroot: /home/fleeb/Downloads
+#
+##accept: yes
+#
+##loc: ch
+#
+#promptpath: interface/prompts/prompts-{loc}.jsonl
+#completedpath: interface/completed/completed_{loc}.jsonl
+#
+#articleroot: /home/fleeb/workspace/local_data/nnn/global-news-headlines
+
+
+
